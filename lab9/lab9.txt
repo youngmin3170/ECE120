@@ -2,8 +2,11 @@ QUESTION 1.  Read through the program lab9.bin. What do you expect the program t
 
 ANSWER: 
 
+The program will modify register 2 when it is run. it will contain decimal number 12 when the program finishes. 
+
 
 QUESTION 2.  Explain in a few sentences why the ability to step through a program (run one instruction at a time) is a very useful tool for debugging a program. Debugging is the process of finding and correcting bugs (or errors) in a program. Hint: Finding a bug is often much more difficult than correcting it.
 
 ANSWER: 
 
+I think that the ability to step through a program is a very useful tool for debugging a program because it allows us to walk through our code one by one and find the error easiler than using "continue" feature. Also, "step" allows me to step through the process and see where I am making a mistake.
