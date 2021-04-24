@@ -1,9 +1,16 @@
-Question 1: Describe the errors that occur when trying to assemble lab11.asm. Identify the cause of each error.
-
+wQuestion 1: Describe the errors that occur when trying to assemble lab11.asm. Identify the cause of each error.
+one error occurs because there is no ".ORIG" to start the program.
+Another error occurs when it tried to subtract 1 by using x3010. It is supposed to be xFFFF.
+Another error occurs when there is extra comma on line 19.
+I need to load zero to R5.
+I need to change BRpz to BRzp. I think it checks the outer count was zero first. 
 
 
 Question 2: For each label in the code, write down the corresponding memory location. 
-
+I have two labels, outerloop and innerloop, in the code.
+Outerloop: x3005
+InnerLoop: x3006
 
 
 Question 3: Between using labels and explicit memory locations/offsets, which one makes the most sense, and why?
+I think using labels the most sense becuase labels make referring to specific locations much easier and clearer. Also, labels make branching easier.
