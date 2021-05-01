@@ -84,7 +84,7 @@ END_COLUMN
 
 
 
-NO		Halt		; stops the program
+NO	HALT		; stops the program
 
 ZERO	.FILL	x5000	; 0 if the font data is 0
 ONE		.FILL	x5001	; 1 if the font data is 1
