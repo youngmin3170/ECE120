@@ -1,3 +1,106 @@
+; This program prints a picture of an ASCII character with using zeros and ones
+; The ASCII character that I need to print is located in memory location x5002
+; x5000 and x5001 have zero and one respectively to form a picture of an ASCII
+; character that I need to represent.
+
+;	R0 - ASCII value to be printed
+;	R1 - counter for column
+;	R2 - counter for row
+;	R3 - address of FONT_DATA
+;	R4 - FONT_DATA for each line
+;	R5 - data of the ASCII value at a point
+
+
+		.ORIG x3000	; start the program at x3000
+
+
+
+		AND R0, R0, #0	; Clear all the registers
+		AND R1, R1, #0
+		AND R2, R2, #0
+		AND R3, R3, #0
+		AND R4, R4, #0
+		AND R5, R5, #0
+
+		ADD R2, R2, #8	; R2 <- R2 + 8
+		ADD R2, R2, #8	; R2 <- R2 + 8 for row counter
+
+		LDI R5, DATA	; load value that we need to print into R5
+
+		ADD R5, R5, R5	; R5 <- R5 + R5
+		ADD R5, R5, R5	; R5 <- R5 + R5
+		ADD R5, R5, R5	; R5 <- R5 + R5
+		ADD R5, R5, R5	; R5 <- R5 + R5 (provide the offset for the character)
+						; FONT_DATA
+
+		LEA R3, FONT_DATA	; Load FONT_DATA into R3
+
+		ADD R5, R3, R5	; ADD the offset from R5 to R3 to get a starting point
+
+NEW_ROW
+
+		ADD R2, R2, #0	; CC for the next code
+		BRz NO			; if it holds true, the program ends (R2 holds 0)
+		AND R1, R1, #0	; clear R1 
+		ADD R1, R1, #8	; R1 <- R1 + 8 (reset colum counter to 8)
+		LDR R4, R5, #0	; Load the address of the starting point to R4
+
+NEW_COLUMN
+
+		ADD R1, R1, #0	; CC for the next code
+		BRz	END_COLUMN	; if it holds true, the program moves to ENDCOLUMN
+						; (R1 holds 0)
+		ADD R4, R4, #0	; CC for the next code
+		BRn LOAD_ONE	; the program moves to LOAD_ONE which will print one
+		BRzp LOAD_ZERO	; the program moves to LOAD_ZERO which will print zero
+
+LOAD_ZERO
+
+		LDI R0, ZERO	; Load ZERO into R0
+		OUT				; prints zero on the screen
+		ADD R4, R4, R4	; to test next value
+		ADD R1, R1, #-1	; reduce the column counter by 1
+		BRzp NEW_COLUMN	; reiterate the process
+
+LOAD_ONE
+
+		LDI R0, ONE		; Load ONE into R0
+		OUT				; prints one on the screen
+		ADD R4, R4, R4	; to test next value
+		ADD R1, R1, #-1	; reduce the column counter by 1
+		BRzp NEW_COLUMN	; reiterate the process
+
+
+END_COLUMN
+
+		LD R0, NEWLINE	; Enter a new line
+		OUT				; Add a new line
+		ADD R2, R2, #-1	; reduce the row counter by 1
+		ADD R5, R5, #1	; add R5 with 1 so that it can run the new instruction
+		BRnzp NEW_ROW	; branch back to NEW_ROW
+
+
+
+
+
+
+NO		Halt		; stops the program
+
+ZERO	.FILL	x5000	; 0 if the font data is 0
+ONE		.FILL	x5001	; 1 if the font data is 1
+DATA	.FILL	x5002	; data to be printed 
+NEWLINE	.FILL	x000A	; character to start at a new line
+
+
+
+
+
+
+
+
+
+
+
 ; The table below represents an 8x16 font.  For each 8-bit extended ASCII
 ; character, the table uses 16 memory locations, each of which contains
 ; 8 bits (the high 8 bits, for your convenience) marking pixels in the
