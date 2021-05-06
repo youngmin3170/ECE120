@@ -1,3 +1,92 @@
+; memory addresses x5000 and x5001 provides two ASCII characters
+; It prints a string starting from memory addresses  at x5000 and ends 
+; with a NULL(x00) character
+; It is printing a string in line by line.
+
+
+; R0 - ASCII value to print on the screen
+; R1 - Column counter
+; R2 - Row counter
+; R3 - Address of current ASCII characters
+; R4 - address of crrent row of FONT_DATA
+; R5 - Data in current row of FONT_DATA
+; R6 - temporary register
+
+	.ORIG	x3000		; the program starts at x3000
+
+AND	R0, R0, #0	; Clear all registers
+AND R1, R1, #0
+AND R2, R2, #0
+AND R3, R3, #0
+AND R4, R4, #0
+AND R5, R5, #0
+AND R6, R6, #0 
+
+ADD R2, R2, #15 ; set row counter = 15
+
+ROW			LD R3, DATA ; Set R3 be the first char in the string
+			LDR	R4, R3, #0	; put ASCII value in R4
+			BRz	NEW_ROW ; create newlines if null
+
+
+
+CHAR		ADD	R4, R4, R4	; to find offset for FONT_DATA
+			ADD	R4, R4, R4
+			ADD R4, R4, R4
+			ADD R4, R4, R4
+			LEA R6, FONT_DATA
+			ADD	R4, R4, R6	; add offset
+
+			NOT	R6, R2 ; to adjust row address by adding number of rows that are already printed.
+			ADD R6, R6, #1
+			ADD R6, R6, #15
+			ADD R4, R4, R6 ; R6 <- 15 - row number
+
+			LDR R5, R4, #0 ; get row data into R5
+			AND	R1, R1, #0
+			ADD R1, R1, #7 ; set column counter = 7
+
+BITS		ADD R5, R5, #0
+			BRn LOAD_ONE
+
+LOAD_ZERO	LDI	R0, ZERO
+			BRnzp	PRINT
+
+LOAD_ONE	LDI R0, ONE
+			BRnzp	PRINT
+
+NEXTROW		LD R0, NEWLINE
+			OUT
+			ADD R2, R2, #-1
+			BRzp	ROW
+PRINT		OUT
+
+			ADD R5, R5, R5
+			ADD R1, R1, #-1
+			BRzp	BITS
+
+			ADD R3, R3, #1
+			LDR	R4, R3, #0
+			BRnp	CHAR
+
+DONE	HALT ; halts the program
+
+ZERO	.FILL	x5000 ; 0 if front data is zero
+ONE		.FILL	x5001 ; 1 if front data is one
+DATA	.FILL	x5002 ; data to be printed
+
+NEWLINE	.FILL	x000A
+
+
+
+
+
+
+
+ 
+
+
+
 ; The table below represents an 8x16 font.  For each 8-bit extended ASCII
 ; character, the table uses 16 memory locations, each of which contains
 ; 8 bits (the high 8 bits, for your convenience) marking pixels in the
