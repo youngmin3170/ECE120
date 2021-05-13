@@ -1,0 +1,16 @@
+Loaded "graded/registers.obj" and set PC to x5000
+Failed to load "lab13_student.obj."
+Set R7 to xFFFF.
+Set R6 to xFFFF.
+Set R5 to xFFFF.
+Set R4 to xFFFF.
+Set R3 to xFFFF.
+Set R2 to xFFFF.
+Set R1 to xFFFF.
+Set R0 to xFFFF.
+Illegal instruction at xFFFE!
+PC=xFFFE IR=x8000 PSR=x0400 (ZERO)
+R0=xFFFF R1=xFFFF R2=xFFFF R3=xFFFF R4=xFFFF R5=xFFFF R6=xFFFF R7=xFFFF 
+                   xFFFE x8000 RTI   
+4FF8:                                         0040 0020 0062 0041          @ bA
+5004: 007A 0069 006E 0067 0061                                     zinga       
