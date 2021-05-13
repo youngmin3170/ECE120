@@ -1,0 +1,16 @@
+Have fun.
+
+
+--- halting the LC-3 ---
+
+PC=x0494 IR=xB1AE PSR=x0400 (ZERO)
+R0=x0000 R1=x7FFF R2=x0000 R3=x0000 R4=x0000 R5=x0000 R6=x0000 R7=x0490 
+                   x0494 x0FF9 BRNZP TRAP_HALT
+Loaded "graded/singlecharacter.obj" and set PC to x5000
+Failed to load "lab13_student.obj."
+Illegal instruction at xFFFE!
+PC=xFFFE IR=x8000 PSR=x0400 (ZERO)
+R0=x0000 R1=x7FFF R2=x0000 R3=x0000 R4=x0000 R5=x0000 R6=x0000 R7=x0490 
+                   xFFFE x8000 RTI   
+4FF8:                                         0020 0058 005A 0000           XZ.
+5004: 0000 0000 0000 0000 0000                                     .....       
